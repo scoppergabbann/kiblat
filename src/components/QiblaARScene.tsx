@@ -194,8 +194,6 @@ export default function QiblaARScene(props: ARGuideProps) {
   if (failed) return <div data-ar-status="fallback"><QiblaMarker {...props} /><p className="sensor-help">Panduan sederhana aktif.</p></div>;
   return <figure className="qibla-ar-guide" data-ar-status="active" data-ar-state={view.state}>
     <div className="ar-stage" ref={host} aria-hidden="true" />
-    {(view.state === "far" || view.state === "partial") && <p className="ar-edge-label" aria-hidden="true">{(props.difference ?? 0) < 0 ? "←" : "→"} Kiblat di luar pusat tampilan</p>}
     <DirectionGuide difference={props.difference} notice={props.notice} uncertain={props.uncertain} />
-    <p className="ar-road-note">Jalur menunjukkan arah putaran, bukan rute perjalanan.</p>
   </figure>;
 }

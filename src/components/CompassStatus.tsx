@@ -24,10 +24,12 @@ const permissionLabels = {
 };
 type Location = { latitude: number; longitude: number; accuracy: number };
 
-export default function CompassStatus({ qiblaBearing, location, compass, camera }: {
+export default function CompassStatus({ qiblaBearing, location, compass, camera, onRefreshLocation }: {
   qiblaBearing: number; location: Location;
   compass: ReturnType<typeof useCompass>; camera: ReturnType<typeof useCamera>;
+  onRefreshLocation: () => void;
 }) {
+  const [optionsOpen, setOptionsOpen] = useState(false);
   const [debugEnabled, setDebugEnabled] = useState(false);
   const [arDiagnostics, setARDiagnostics] = useState<ARDiagnostics | null>(null);
   const receiveDiagnostics = useCallback((value: ARDiagnostics | null) => setARDiagnostics(value), []);
@@ -55,27 +57,24 @@ export default function CompassStatus({ qiblaBearing, location, compass, camera 
 
   return (
     <section className="compass-panel" aria-labelledby="compass-title" data-compass-state={compass.status} data-direction-reference={compass.reference}>
-      <p className="permission-step">Lokasi ✓ · {sensorSetup ? "Menyiapkan arah" : "Panduan siap"}</p>
-      <div className="compass-heading">
+      <div className="compass-heading sr-only">
         <h3 id="compass-title">Panduan Kiblat</h3>
         <span>{degrees(qiblaBearing)}° dari utara sejati</span>
       </div>
-      {sensorSetup && !compass.isRunning && <div className="permission-card">
-        <p>Sensor arah belum aktif. Anda dapat mencoba mengaktifkannya kembali.</p>
-        {sensorControl}
-      </div>}
-      {camera.stream ? <QiblaCameraGuide difference={difference} notice={notice} uncertain={compass.unstable} debugEnabled={debugEnabled} onDiagnostics={receiveDiagnostics} /> : <QiblaCompass difference={difference} notice={notice} uncertain={compass.unstable} />}
-      <p className="sensor-message" role="status" aria-live="polite">{compass.error ?? labels[compass.status]}</p>
-      {camera.stream && <p className="direction-reference" role="status">{cameraHeading ? "Mode kamera · arahkan kamera belakang ke depan" : "Mode mendatar · arahkan tepi atas layar"}</p>}
-      <p className="sensor-help">{cameraHeading ? "Pegang ponsel tegak dan putar perlahan ke arah yang ditunjukkan." : compass.isRunning
-        ? "Pegang agak mendatar. Arahkan tepi atas layar ke depan."
-        : "Izinkan sensor untuk membaca arah ponsel. Pegang ponsel agak mendatar."}</p>
+      {camera.stream ? <QiblaCameraGuide difference={difference} notice={notice} uncertain={compass.unstable} debugEnabled={optionsOpen && debugEnabled} onDiagnostics={receiveDiagnostics} /> : <QiblaCompass difference={difference} notice={notice} uncertain={compass.unstable} />}
+      {!sensorSetup && !compass.unstable && <p className="guide-position" role="status">{cameraHeading ? "Tegak · arahkan kamera ke depan" : "Mendatar · arahkan tepi atas layar"}</p>}
+      {sensorSetup && !compass.isRunning && <div className="guide-recovery">{sensorControl}</div>}
+      {compass.status === "requesting" && <div className="guide-recovery">{sensorControl}</div>}
+      {compass.unstable && <button type="button" className="update-location" onClick={() => setOptionsOpen(true)}>Buka bantuan kalibrasi</button>}
+      <details className="guide-options" open={optionsOpen} onToggle={event => {
+        if (event.target === event.currentTarget) setOptionsOpen(event.currentTarget.open);
+      }}>
+        <summary>Bantuan & pengaturan</summary>
+        <div className="guide-options-content">
+      <p className="sensor-message">{compass.error ?? labels[compass.status]}</p>
       {camera.stream && compass.source === "webkit" && <p className="sensor-help">Browser ini memakai kompas tepi atas layar. Gunakan posisi agak mendatar; mode kamera tegak belum tersedia.</p>}
-      {compass.unstable && <p className="sensor-quality-warning">Pembacaan berubah bolak-balik. Arah tetap ditampilkan sebagai perkiraan. Tahan ponsel sejenak; jika masih berubah saat diam, buka panduan kalibrasi.</p>}
-      {compass.status === "active" && !compass.unstable && <p className="sensor-help">
-        {compass.accuracy === null ? "Akurasi sensor tidak dilaporkan oleh browser." : `Perkiraan akurasi dari sensor: ±${Math.ceil(compass.accuracy)}°.`}
-      </p>}
-      <details className="calibration-help">
+      {compass.unstable && <p className="sensor-quality-warning">Jauhkan ponsel dari magnet atau logam, lalu tahan sejenak. Jika pembacaan masih berubah, ikuti panduan kalibrasi.</p>}
+      <details className="calibration-help" open={compass.unstable || undefined}>
         <summary>Kalibrasi kompas</summary>
         <div>
           <p>Jauhkan ponsel dari benda bermagnet atau logam, speaker, kendaraan, dan perangkat elektronik lain.</p>
@@ -83,12 +82,14 @@ export default function CompassStatus({ qiblaBearing, location, compass, camera 
           <p>Jika arah masih berubah saat ponsel diam, pindah tempat dan coba sensor lagi. Panduan ini tidak dapat memastikan sensor sudah terkalibrasi.</p>
         </div>
       </details>
-      {(!sensorSetup || compass.isRunning) && sensorControl}
+      {(!sensorSetup || compass.isRunning) && compass.status !== "requesting" && sensorControl}
       {cameraControls}
+      <button type="button" className="update-location" onClick={onRefreshLocation}>Perbarui lokasi</button>
       <p className="compass-caveat">Panduan masih perkiraan. Perbedaan utara magnetik dan sejati belum dikoreksi.
         {" "}Akurasi arah dapat dipengaruhi oleh sensor perangkat dan kondisi sekitar.
         {compass.accuracy !== null && <> Akurasi sensor: ±{Math.ceil(compass.accuracy)}°.</>}
       </p>
+      <p className="compass-caveat">Jalur menunjukkan arah putaran, bukan rute perjalanan. Lokasi, sensor, dan video diproses di perangkat tanpa disimpan atau dikirim oleh Kiblat.</p>
       <details className="technical-info" onToggle={event => setDebugEnabled(event.currentTarget.open)}>
         <summary>Informasi teknis</summary>
         <dl className="location-coordinates compass-debug">
@@ -117,6 +118,8 @@ export default function CompassStatus({ qiblaBearing, location, compass, camera 
           <div><dt>Longitude</dt><dd>{location.longitude.toFixed(6)}</dd></div>
           <div><dt>Akurasi lokasi</dt><dd>±{Math.ceil(location.accuracy)} m</dd></div>
         </dl>
+      </details>
+        </div>
       </details>
     </section>
   );

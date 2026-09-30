@@ -63,13 +63,13 @@ export default function LocationRequest() {
       <div id="location-result">
         {state.status !== "idle" && (
           <section className="location-result" data-state={state.status} aria-labelledby="location-title">
-            <h2 id="location-title" role="status" aria-live="polite">{titles[state.status]}</h2>
+            <h2 id="location-title" className={state.status === "success" ? "sr-only" : undefined} role="status" aria-live="polite">{titles[state.status]}</h2>
             {requesting && <p role="status">Menyiapkan lokasi, sensor, dan kamera. Dialog izin dapat muncul terpisah; pencarian lokasi mungkin memerlukan beberapa saat.</p>}
             {"message" in state && <p role="status">{state.message}</p>}
             {state.status === "success" && (
               <>
                 {(compass.status === "paused" || camera.status === "paused") && <button type="button" className="start-button" onClick={() => { void compass.start(); void camera.start(); }}>Lanjutkan panduan</button>}
-                {bearing !== null ? <CompassStatus qiblaBearing={bearing} location={state} compass={compass} camera={camera} /> : (
+                {bearing !== null ? <CompassStatus qiblaBearing={bearing} location={state} compass={compass} camera={camera} onRefreshLocation={refresh} /> : (
                   <>
                     <p>Arah Kiblat tidak dapat ditentukan secara unik pada koordinat ini.</p>
                     <details className="technical-info">
@@ -82,7 +82,7 @@ export default function LocationRequest() {
                     </details>
                   </>
                 )}
-                <button type="button" className="update-location" onClick={refresh}>Perbarui lokasi</button>
+                {bearing === null && <button type="button" className="update-location" onClick={refresh}>Perbarui lokasi</button>}
               </>
             )}
           </section>

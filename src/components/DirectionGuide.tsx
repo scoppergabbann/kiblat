@@ -10,7 +10,7 @@ export default function DirectionGuide({ difference, notice, uncertain = false }
   const title = uncertain ? "Tahan ponsel sejenak" : state === "aligned" ? "Arah Kiblat"
     : state === "near" ? "Sedikit lagi"
     : state === "turn" ? `Putar ke ${side}` : notice?.title ?? "Sensor belum dapat dibaca";
-  const description = uncertain ? "Arah masih berubah. Penanda adalah perkiraan; tunggu pembacaan lebih tenang." : state === "aligned" ? "Sejajar menurut sensor · toleransi ±3°"
+  const description = uncertain ? "Pembacaan belum stabil." : state === "aligned" ? "Perkiraan sensor · ±3°"
     : available ? `${Math.abs(difference).toFixed(0)}° ke ${side}`
     : notice?.detail ?? "Periksa izin sensor dan posisi ponsel.";
   return <figcaption className="compass-caption">

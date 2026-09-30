@@ -197,3 +197,22 @@ body:has(.camera-backdrop) .landing { padding-top: max(82px, calc(env(safe-area-
   .marker-track { top: 54px; height: 146px; }
   .marker-outside-label { top: 92px; }
 }
+
+/* Keep the active guide focused; supporting text is available on demand. */
+.landing:has(.compass-panel),
+body:has(.camera-backdrop) .landing:has(.compass-panel) { gap: 12px; padding-top: max(26px, env(safe-area-inset-top)); }
+.landing:has(.compass-panel) > .actions > .privacy,
+.landing:has(.compass-panel) > .actions > .install-help { display: none; }
+.compass-panel .compass-heading.sr-only { margin: 0; }
+.compass-panel .compass-caption { min-height: 74px; }
+.location-result .guide-position { margin: 2px 0 20px; text-align: center; color: var(--muted); font-size: .8125rem; line-height: 1.5; }
+.guide-options { margin-top: 12px; border: 1px solid #456056; border-radius: 16px; background: rgb(12 38 32 / 85%); }
+.guide-options > summary { min-height: 48px; padding: 14px 16px; color: var(--muted); text-align: center; font-size: .875rem; cursor: pointer; }
+.guide-options > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 16px; }
+.guide-options-content { padding: 0 16px 16px; }
+.guide-options .technical-info { margin-top: 16px; }
+.guide-recovery { margin: 12px 0 20px; }
+.landing:has(.compass-panel) .ar-stage { height: clamp(290px, 53svh, 470px); margin-top: 16px; }
+@media (orientation: landscape) and (max-height: 500px) {
+  .landing:has(.compass-panel) .ar-stage { height: 240px; }
+}
