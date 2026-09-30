@@ -1,0 +1,19 @@
+{
+  "id": "/",
+  "name": "Kiblat — Temukan Arah Kiblat",
+  "short_name": "Kiblat",
+  "description": "Panduan arah Kiblat dari lokasi Anda, diproses di perangkat sendiri.",
+  "lang": "id",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0c2624",
+  "theme_color": "#0c2624",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/icons/kiblat-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/kiblat-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/kiblat-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
