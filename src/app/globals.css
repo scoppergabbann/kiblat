@@ -46,14 +46,12 @@ h1 { margin: 0; font-size: clamp(2.5rem, 11vw, 3.1rem); line-height: 1.1; font-w
 h1 span { color: var(--accent); }
 .intro { max-width: 310px; margin: 22px auto 0; color: var(--muted); font-size: 1rem; line-height: 1.65; text-wrap: pretty; }
 .actions { width: 100%; }
-.support { margin-top: 24px; padding-top: 20px; border-top: 1px solid #36504a; text-align: center; }
-.support-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; max-width: 100%; padding: 12px 18px; border: 1px solid #6f8b76; border-radius: 14px; background: #12342e; color: var(--accent); font-size: .875rem; font-weight: 600; text-decoration: none; }
+.support { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 8px; }
+.support-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; flex-shrink: 0; padding: 8px 4px; border-radius: 8px; color: var(--accent); font-size: .8125rem; font-weight: 600; text-decoration: none; }
 .support-button svg { flex-shrink: 0; }
 .support-button:hover { background: #24493d; }
-.support-button:focus-visible, .support-purpose summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
-.support p { margin: 10px auto 0; max-width: 340px; color: var(--muted); font-size: .8125rem; line-height: 1.6; }
-.support-purpose summary { display: list-item; width: fit-content; max-width: 100%; margin: 0 auto; padding: 12px 4px; min-height: 44px; color: var(--muted); font-size: .8125rem; cursor: pointer; }
-.support-purpose p { margin-top: 0; text-align: left; }
+.support-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.support p { margin: 0; color: var(--muted); font-size: .6875rem; line-height: 1.5; }
 .start-button { width: 100%; min-height: 60px; padding: 18px 22px; display: flex; align-items: center; justify-content: center; gap: 20px; border: 0; border-radius: 18px; background: var(--accent); color: #142f22; font: inherit; font-size: 1rem; font-weight: 700; }
 .start-button:disabled { cursor: not-allowed; opacity: 1; }
 .start-button:focus-visible { outline: 3px solid white; outline-offset: 5px; }
@@ -220,7 +218,7 @@ body:has(.camera-backdrop) .landing:has(.compass-panel) { gap: 12px; padding-top
 .guide-options-content { padding: 0 16px 16px; }
 .guide-options .technical-info { margin-top: 16px; }
 .guide-recovery { margin: 12px 0 20px; }
-.landing:has(.compass-panel) .ar-stage { height: clamp(290px, 53svh, 470px); margin-top: 16px; }
+.landing:has(.compass-panel) .ar-stage { height: clamp(238px, calc(53svh - 52px), 418px); margin-top: 16px; }
 @media (orientation: landscape) and (max-height: 500px) {
   .landing:has(.compass-panel) .ar-stage { height: 240px; }
 }
