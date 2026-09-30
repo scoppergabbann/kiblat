@@ -46,6 +46,25 @@ export default function Home() {
           <p><strong>iPhone/iPad:</strong> buka di Safari, ketuk Bagikan, lalu Tambahkan ke Layar Utama.</p>
           <p>Nama menu dapat berbeda. Koneksi internet tetap diperlukan untuk membuka aplikasi; izin lokasi, sensor, dan kamera tetap Anda tentukan.</p>
         </details>
+        <div className="support">
+          <a
+            className="support-button"
+            href="https://trakteer.id/mochammad_fawwaz/?t=1790778519792"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+            Dukung melalui Trakteer
+            <span className="sr-only"> (buka tab baru)</span>
+          </a>
+          <p>Dukungan Anda menyemangati pengembangan Kiblat.</p>
+          <details className="support-purpose">
+            <summary>Ke mana dukungan Anda disalurkan?</summary>
+            <p>Saya tidak mengambil keuntungan pribadi dari dukungan Anda. Seluruh dukungan akan saya salurkan kepada fakir miskin, anak yatim, atau kegiatan yang membutuhkan dana bantuan. Terima kasih telah ikut berbagi kebaikan.</p>
+          </details>
+        </div>
       </footer>
     </main>
   );
