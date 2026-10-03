@@ -1,4 +1,5 @@
 import LocationRequest from "@/components/LocationRequest";
+import InstallApp from "@/components/InstallApp";
 
 export default function Home() {
   return (
@@ -39,13 +40,7 @@ export default function Home() {
           </svg>
           <p>Lokasi, sensor arah, dan kamera diproses di perangkat Anda. Kiblat tidak menyimpan atau mengirim data tersebut.</p>
         </div>
-        <details className="install-help">
-          <summary>Pasang ke layar utama (opsional)</summary>
-          <p>Kiblat tetap bisa digunakan langsung di browser tanpa dipasang.</p>
-          <p><strong>Android:</strong> buka menu browser, lalu pilih Instal aplikasi atau Tambahkan ke layar utama jika tersedia.</p>
-          <p><strong>iPhone/iPad:</strong> buka di Safari, ketuk Bagikan, lalu Tambahkan ke Layar Utama.</p>
-          <p>Nama menu dapat berbeda. Koneksi internet tetap diperlukan untuk membuka aplikasi; izin lokasi, sensor, dan kamera tetap Anda tentukan.</p>
-        </details>
+        <InstallApp />
         <div className="support">
           <a
             className="support-button"

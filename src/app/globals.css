@@ -193,11 +193,14 @@ body:has(.camera-backdrop) .landing { padding-top: max(82px, calc(env(safe-area-
 .permission-card .camera-controls { margin-top: 0; }
 .permission-card .camera-button { margin-top: 12px; }
 [data-direction-state="uncertain"] .direction-text { color: #f2dfb8; }
-.install-help { margin-top: 20px; color: var(--muted); font-size: .875rem; line-height: 1.6; border-top: 1px solid #36504a; }
-.install-help summary { min-height: 48px; padding: 14px 0; cursor: pointer; }
-.install-help summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.install-help p { margin: 0 0 12px; }
-@media (display-mode: standalone), (display-mode: fullscreen) { .install-help { display: none; } }
+.install-app { text-align: center; }
+.install-button { min-height: 44px; padding: 10px 16px; border: 0; border-radius: 8px; background: transparent; color: var(--accent); font: inherit; font-size: .8125rem; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+.install-button:hover { background: #193832; }
+.install-button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.install-button:disabled { cursor: wait; }
+.install-instructions { padding: 4px 14px 12px; border: 1px solid #456056; border-radius: 12px; background: #12342e; text-align: left; }
+.install-instructions p { margin: 8px 0 0; color: var(--muted); font-size: .8125rem; line-height: 1.6; }
+@media (display-mode: standalone), (display-mode: fullscreen) { .install-app { display: none; } }
 @media (orientation: landscape) and (max-height: 500px) {
   .marker-stage { height: 230px; }
   .marker-track { top: 54px; height: 146px; }
@@ -207,8 +210,7 @@ body:has(.camera-backdrop) .landing { padding-top: max(82px, calc(env(safe-area-
 /* Keep the active guide focused; supporting text is available on demand. */
 .landing:has(.compass-panel),
 body:has(.camera-backdrop) .landing:has(.compass-panel) { gap: 12px; padding-top: max(26px, env(safe-area-inset-top)); }
-.landing:has(.compass-panel) > .actions > .privacy,
-.landing:has(.compass-panel) > .actions > .install-help { display: none; }
+.landing:has(.compass-panel) > .actions > .privacy { display: none; }
 .compass-panel .compass-heading.sr-only { margin: 0; }
 .compass-panel .compass-caption { min-height: 74px; }
 .location-result .guide-position { margin: 2px 0 20px; text-align: center; color: var(--muted); font-size: .8125rem; line-height: 1.5; }
@@ -219,6 +221,8 @@ body:has(.camera-backdrop) .landing:has(.compass-panel) { gap: 12px; padding-top
 .guide-options .technical-info { margin-top: 16px; }
 .guide-recovery { margin: 12px 0 20px; }
 .landing:has(.compass-panel) .ar-stage { height: clamp(238px, calc(53svh - 52px), 418px); margin-top: 16px; }
+.landing:has(.compass-panel):has(.install-app) .ar-stage { height: clamp(194px, calc(53svh - 96px), 374px); }
 @media (orientation: landscape) and (max-height: 500px) {
-  .landing:has(.compass-panel) .ar-stage { height: 240px; }
+  .landing:has(.compass-panel) .ar-stage,
+  .landing:has(.compass-panel):has(.install-app) .ar-stage { height: 240px; }
 }
